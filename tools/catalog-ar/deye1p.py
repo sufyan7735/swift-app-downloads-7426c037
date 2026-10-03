@@ -123,7 +123,7 @@ def rebuild():
 if __name__ == "__main__":
     pg = rebuild()
     for dst in DSTS:
-        d = pymupdf.open(AR)
+        d = pymupdf.open('/tmp/dy/ar-orig.pdf')
         d.delete_page(1)
         d.insert_pdf(pg)
         d.subset_fonts()
