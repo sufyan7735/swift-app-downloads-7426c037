@@ -13,6 +13,7 @@ import pymupdf as fitz
 import numpy as np
 
 AR = re.compile(r"[\u0600-\u06FF\uFB50-\uFDFF\uFE70-\uFEFF]")
+HGAP = 4
 C = "/dev-server/public/catalogs"
 
 # name -> (english source, [bands]) ; band = (x0,y0,x1,y1[, mode])
@@ -57,25 +58,32 @@ def elements(page, band, arr, sc):
         s = "".join(sp["text"] for l in b["lines"] for sp in l["spans"])
         if AR.search(s):
             texts.append(r)
-    # icon pixels: non-bg pixels in band not covered by arabic text
     x0, y0, x1, y1 = [int(v * sc) for v in (X0, Y0, X1, Y1)]
     sub = arr[y0:y1, x0:x1].astype(int)
     bg = np.median(sub.reshape(-1, 3), axis=0)
     mask = (np.abs(sub - bg).sum(axis=2) > 40)
-    for r in texts:
-        a, b, c, d = int(r.x0 * sc) - x0 - 2, int(r.y0 * sc) - y0 - 2, int(r.x1 * sc) - x0 + 2, int(r.y1 * sc) - y0 + 2
-        mask[max(b, 0):d, max(a, 0):c] = False
     from scipy import ndimage
-    lab, n = ndimage.label(ndimage.binary_dilation(mask, iterations=4))
-    icons = []
-    for sl in ndimage.find_objects(lab):
+    st = np.ones((5, 2 * HGAP * sc + 1), bool)
+    lab, n = ndimage.label(ndimage.binary_dilation(mask, structure=st))
+    tx, icons = [], []
+    for k, sl in enumerate(ndimage.find_objects(lab), 1):
         if sl is None:
             continue
         ys, xs = sl
-        r = fitz.Rect((xs.start + x0) / sc, (ys.start + y0) / sc, (xs.stop + x0) / sc, (ys.stop + y0) / sc)
-        if r.width < 3 or r.height < 3:
+        comp = mask[sl] & (lab[sl] == k)
+        yy, xx = np.nonzero(comp)
+        if len(yy) == 0:
             continue
-        icons.append(r)
+        r = fitz.Rect((xs.start + xx.min() + x0) / sc, (ys.start + yy.min() + y0) / sc,
+                      (xs.start + xx.max() + 1 + x0) / sc, (ys.start + yy.max() + 1 + y0) / sc)
+        if r.width < 2 or r.height < 2:
+            continue
+        cen = fitz.Point((r.x0 + r.x1) / 2, (r.y0 + r.y1) / 2)
+        if any((r & t).get_area() > 0.3 * min(r.get_area(), t.get_area()) for t in texts):
+            tx.append(r)
+        else:
+            icons.append(r)
+    texts = tx
     return texts, icons
 
 
