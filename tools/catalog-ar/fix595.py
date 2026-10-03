@@ -14,15 +14,17 @@ CSS = """
 INK, RULE = "#3a3a3a", (0.62, 0.62, 0.62)
 
 
+sys.path.insert(0, __import__("os").path.dirname(__import__("os").path.abspath(__file__)))
+import engine  # manual bidi: Arabic and LTR runs are shaped and laid out right-to-left separately
+
+
 def text(page, x0, x1, cy, s, size=7.0, w=400, align="center", lines=1):
-    h = size * 1.25 * lines
-    top = cy - h / 2 - size * 0.08
-    dirn = "rtl"
-    html = '<div dir="%s" style="text-align:%s;font-size:%.2fpt;font-weight:%d;color:%s">%s</div>' % (
-        dirn, align, size, w, INK, s.replace("&", "&amp;").replace("<", "&lt;").replace("\n", "<br/>"))
-    rc = page.insert_htmlbox(pymupdf.Rect(x0, top, x1, top + h + size * 2), html, css=CSS, archive=ARCH)
-    if rc[0] < 0:
-        print("NOFIT", s, file=sys.stderr)
+    ls = s.split("\n"); lh = size * 1.3
+    for i, ln in enumerate(ls):
+        y = cy + (i - (len(ls) - 1) / 2) * lh
+        lw = engine.line_width(ln, w, size)
+        xr = x1 if align == "right" else (x0 + lw if align == "left" else (x0 + x1) / 2 + lw / 2)
+        engine.draw_line(page, xr, y, ln, w, size, INK)
 
 
 def rule(page, x0, x1, y, width=0.5, color=RULE):
