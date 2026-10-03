@@ -105,7 +105,7 @@ T = {
  'THDi': 'THDi', 'Input DC (PV side)': 'المدخل DC (جانب الألواح)', 'Recommended max. PV array size（KW）': 'أقصى حجم موصى به للألواح (kW)',
  'MPPT voltage range（V）': 'نطاق جهد MPPT (V)', 'Max. input current（A）': 'أقصى تيار دخل (A)',
  'MPPT number/Max input strings number': 'عدد MPPT / أقصى عدد سلاسل',
- '< 3T': 'أقل من 3 طن', '-25~55': '-25 ~ 55', '-20~60': '-20 ~ 60', '3P/N/PE, 220 V / 380 V, 230 V / 400 V': '3P/N/PE، 220 V / 380 V، 230 V / 400 V',
+ '< 3T': 'أقل من 3 طن', '-25~55': '-25°C ~ 55°C', '-20~60': '-20°C ~ 60°C', '3P/N/PE, 220 V / 380 V, 230 V / 400 V': '3P/N/PE، 220 V / 380 V، 230 V / 400 V',
  'Liqud cooling, 50% glycol solution': 'تبريد سائل، محلول جلايكول 50%',
  'combustible gas detector+smoke detector+ temperature detector+explosion-proof fan+Aerosol': 'كاشف غازات قابلة للاشتعال + كاشف دخان + كاشف حرارة + مروحة مقاومة للانفجار + إيروسول',
  'Optional': 'اختياري', 'Standard configuration': 'تكوين قياسي',
@@ -184,6 +184,8 @@ for key, name in NAMES.items():
             inreg = any(r.contains(l['bbox']) for r, _ in regs)
             tr = T.get(l['t'], l['t'])
             if inreg or tr != l['t']:
+                if key == '112s' and pno in (2, 3) and l['size'] > 20:
+                    continue  # big white-page title overlaps the model line: whited out at draw time instead
                 bb = l['bbox']; c = (bb.y0 + bb.y1) / 2; k = l['size'] * 0.42
                 cp.add_redact_annot(R(bb.x0, max(bb.y0, c - k), bb.x1, min(bb.y1, c + k)))
         cp.apply_redactions(images=pymupdf.PDF_REDACT_IMAGE_NONE, graphics=pymupdf.PDF_REDACT_LINE_ART_NONE)
@@ -218,6 +220,8 @@ for key, name in NAMES.items():
                 continue
             if reg is None and tr == t:
                 continue  # untouched original text (model names, numbers)
+            if key == '112s' and pno in (2, 3) and l['size'] > 20:
+                pg.draw_rect(R(b.x0, (b.y0 + b.y1) / 2 - l['size'] * 0.45, b.x1, (b.y0 + b.y1) / 2 + l['size'] * 0.5), color=None, fill=(1, 1, 1))
             ar = fix(tr); size = l['size']; col = '#%06x' % l['color']; w = l['w']
             cy = (b.y0 + b.y1) / 2 + size * 0.05
             lw = engine.line_width(ar, w, size) if engine.AR.search(ar) else engine.width(ar, w, size)
