@@ -13,7 +13,7 @@ GROUP = [("Model", "الموديل"), ("AC Input Data", "بيانات دخل AC"
 ITEM = [("Input format", "صيغة الدخل"), ("Rated input voltage", "جهد الدخل المقنن"), ("Voltage range fed", "نطاق جهد التغذية للشبكة"),
         ("Frequency range fed", "نطاق تردد التغذية للشبكة"), ("Voltage range", "نطاق الجهد"), ("Frequency range", "نطاق التردد"),
         ("Rated power", "القدرة المقننة"), ("Battery inverter", "إنفرتر البطارية"), ("Photovoltaic inverter", "الإنفرتر الشمسي"),
-        ("Photovoltai", "الألواح الشمسية"), ("Battery", "البطارية"), ("Output voltage", "جهد الخرج"), ("Output frequency", "تردد الخرج"),
+        ("Photovoltai", "الشمسي"), ("Battery", "البطارية"), ("Output voltage", "جهد الخرج"), ("Output frequency", "تردد الخرج"),
         ("Waveform", "شكل الموجة"), ("Switching time", "زمن التحويل، قابل للضبط"), ("Peak power", "قدرة الذروة"),
         ("Overload capacity", "قدرة التحميل الزائد"), ("Rated output current", "تيار الخرج المقنن"),
         ("Power factor range", "نطاق معامل القدرة"), ("Maximum conversion efficiency", "أقصى كفاءة تحويل DC/AC"),
@@ -37,7 +37,7 @@ VAL = [("None", "لا يوجد"), ("Pure sine wave", "موجة جيبية نقي
        ("Lithium battery BMS", "بطاقة اتصال BMS لبطاريات الليثيوم، بطاقة WIFI، بطاقة تلامس جاف، وغيرها"),
        ("-10~50", "-10~50 °C"), ("-15~60", "-15~60 °C"), ("15~60", "-15~60 °C"),
        ("20%~95%", "من 20% إلى 95% بدون تكاثف"),
-       ("The altitude", "يجب ألا يتجاوز الارتفاع 1000 متر، وفوق 1000 متر\nتُخفَّض القدرة المقننة. أقصى ارتفاع 4000 متر\nراجع IEC 62040"),
+       ("The altitude", "لا يتجاوز 1000 متر، وفوقها تُخفَّض القدرة المقننة\nأقصى ارتفاع 4000 متر، راجع IEC 62040"),
        ("Parallel", "توازي وربط بالشبكة")]
 SKIP = ("Load;400ms", "meters, the rating", "meters. Refer", "is 4000 meters", "maximum altitude is", "Grid connection", "℃")
 
