@@ -82,7 +82,7 @@ VAL = {
     "Terminal connector": "موصل أطراف", "Terminal Block": "أطراف توصيل", "Terminal block": "أطراف توصيل",
     "OT terminal": "أطراف OT", "7.0\" LCD display & Bluetooth + APP": "شاشة LCD مقاس 7.0 بوصة + Bluetooth + تطبيق",
     "40% rated power": "40% من القدرة المقننة",
-    "① Supporting parallel 140A input.": "① يدعم دخلاً متوازياً حتى 140A.",
+    "① Supporting parallel 140A input.": "① يدعم دخلاً متوازياً حتى 140A",
     "① This column only shows the planned certification standards. Please confirm the specific time of obtaining the standards with the local team.":
         "① يعرض هذا العمود معايير الاعتماد المخطط لها فقط، يرجى تأكيد موعد الحصول عليها مع الفريق المحلي.",
 }
@@ -129,7 +129,7 @@ def rebuild(en):
         if t == "Preliminary":
             continue  # rotated watermark: dropped (would read mirrored)
         v = VAL.get(t, t)
-        if not engine.AR.search(v):  # pure Latin/numeric value: draw as one LTR run so "< 10 ms" keeps its order
+        if not engine.AR.search(v) and "①" not in v:  # pure Latin/numeric value: draw as one LTR run so "< 10 ms" keeps its order
             fs = sz
             tw = engine.width(v, w, fs)
             if tw > 380: fs *= 380 / tw; tw = 380
