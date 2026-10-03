@@ -114,6 +114,13 @@ def rebuild():
                 engine.place(p, pymupdf.Rect(0, 490, 0, 498), {"ar": PROT, "cx": W - 373.5, "center": True, "maxw": 330, "lh": 8.4}, 7.2, col)
                 done_prot = True
             continue
+        if t.startswith("-40 to"):
+            a, b = "-40 ~ +60 °C", "، خفض القدرة فوق 45 °C"
+            wa, wb = engine.line_width(a, 400, sz), engine.line_width(b, 400, sz)
+            xr = mcx + (wa + wb + 2) / 2
+            rr = pymupdf.Rect(0, 586, 0, 595)
+            engine.place(p, rr, {"ar": a, "r": xr}, sz, col)
+            engine.place(p, rr, {"ar": b, "r": xr - wa - 2}, sz, col); continue
         if t.startswith("the Warranty"):
             engine.place(p, r, {"ar": WARR2, "cx": W - 373.5, "maxw": 340}, sz, col); continue
         engine.place(p, r, {"ar": VAL.get(t, t), "cx": mcx, "center": True, "lh": 9, "w": 600 if col == 0xffffff else 400, "maxw": 300}, sz, col)
