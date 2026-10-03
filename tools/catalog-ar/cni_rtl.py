@@ -129,7 +129,7 @@ def draw(pg, xr, cy, ar, w, size, col):
     if not engine.AR.search(ar):
         engine.put(pg, xr, cy, ar, True, w, size, col)
     else:
-        draw(pg, xr, cy, ar, w, size, col)
+        engine.draw_line(pg, xr, cy, ar, w, size, col)
 
 
 def fix(s):
