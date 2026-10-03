@@ -14,13 +14,13 @@ T = {
  'Battery Cycles': 'عدد دورات البطارية', 'Type of Cooling': 'نوع التبريد', 'Operating Temperature': 'حرارة التشغيل',
  'Storage Temperature': 'حرارة التخزين', 'Allow Relative Humidity': 'الرطوبة النسبية المسموحة',
  'Communication Interface': 'واجهة الاتصال', 'Approval Standards': 'معايير الاعتماد',
- 'Product Features': 'مميزات المنتج', 'Contact:': ':للتواصل', 'Tel:': ':هاتف',
+ 'Product Features': 'مميزات المنتج', 'Contact:': 'للتواصل:', 'Tel:': 'هاتف:',
  'Business Cooperation': 'تعاون تجاري', 'website': 'الموقع',
  '*The above is for reference only, the specification sheet shall prevail.': '*البيانات أعلاه للاسترشاد فقط، ويُعتمد ورق المواصفات الرسمي.',
- '11000 cycles@(25℃, 100%DOD, 0.5P, @70%SOH)': '11000 دورة @ (25°C، 100%DOD، 0.5P، @70%SOH)',
+ '11000 cycles@(25℃, 100%DOD, 0.5P, @70%SOH)': '11000 دورة عند 25°C و 100%DOD و 0.5P و 70%SOH',
  'LiFePO4': 'LiFePO4',
  # ---- 112C ----
- 'C&I ESS': 'نظام تخزين تجاري وصناعي', 'Safety & Reliability': 'الأمان والموثوقية',
+ 'C&I ESS': 'C&I ESS', 'Safety & Reliability': 'الأمان والموثوقية',
  'High-Efficiency Energy': 'إدارة طاقة', 'Management': 'عالية الكفاءة',
  'Smart Configuration': 'تهيئة ذكية', 'Flexible Installation': 'تركيب مرن',
  'The cabinet is built to withstand harsh environ-': 'الخزانة مصممة لتحمّل البيئات القاسية،',
@@ -35,14 +35,14 @@ T = {
  'Compound Mode': 'نمط التجميع', 'Rated Capacity': 'السعة المقننة', 'Rated Charge/': 'معدل الشحن/',
  'Discharge Ratio': 'التفريغ المقنن', 'Rated Energy': 'الطاقة المقننة', 'Rated Voltage': 'الجهد المقنن',
  'Operating Voltage Range': 'نطاق جهد التشغيل', 'Standard Charge': 'تيار الشحن/التفريغ',
- 'Discharge Current': 'القياسي', 'Noise': 'الضوضاء', '＜75dB': '< 75dB', 'Air Cooling': 'تبريد هوائي',
+ 'Discharge Current': 'القياسي', 'Noise': 'الضوضاء', '＜75dB': 'أقل من 75dB', 'Air Cooling': 'تبريد هوائي',
  'Dimensions': 'الأبعاد', 'Battery Weight': 'وزن البطارية', 'Corrosion Resistance Grade': 'درجة مقاومة التآكل',
- 'Levels Of Protection': 'درجة الحماية', '0-95% (no condensation)': '0-95% (بدون تكثيف)',
- '≤ 4000 (decreased above 2000m)': '≤ 4000 (خفض الأداء فوق 2000m)', 'DC Side Efficiency': 'كفاءة جانب DC',
+ 'Levels Of Protection': 'درجة الحماية', '0-95% (no condensation)': '0-95% بدون تكثيف', '≥ 93%': '93% أو أكثر',
+ '≤ 4000 (decreased above 2000m)': 'حتى 4000m، مع خفض الأداء فوق 2000m', 'DC Side Efficiency': 'كفاءة جانب DC',
  '485, CAN, Ethernet': '485، CAN، Ethernet', '-20℃-60℃': '-20°C ~ 60°C', 'Protection': 'الحماية',
  'Overtemperature/Undertemperature/Overcharge/Overcurrent/Undervoltage': 'حرارة زائدة / حرارة منخفضة / شحن زائد / تيار زائد / جهد منخفض',
  'Fire Protection System': 'نظام الحماية من الحريق', 'aerosol': 'إيروسول',
- 'Charging: 0℃-55℃ Discharging: -20℃-55℃': 'الشحن: 0°C ~ 55°C   التفريغ: -20°C ~ 55°C',
+ 'Charging: 0℃-55℃ Discharging: -20℃-55℃': 'الشحن من 0°C إلى 55°C، التفريغ من -20°C إلى 55°C',
  'Allowable Altitude Bbove': 'الارتفاع المسموح', 'Sea Level': 'عن سطح البحر',
  # ---- 112S ----
  'C&I Battery Pack': 'حزمة بطاريات تجارية وصناعية', 'Built for Maximum Flexibility': 'مصمم لأقصى درجات المرونة',
@@ -69,17 +69,17 @@ T = {
  'System Operating Voltage': 'جهد تشغيل النظام', 'Maximum Charge/Discharge Current': 'أقصى تيار شحن/تفريغ',
  'System Energy Range': 'نطاق طاقة النظام', 'Standard Charge/Discharge Current': 'تيار الشحن/التفريغ القياسي',
  'Natural Cooling': 'تبريد طبيعي', 'Mounting Method': 'طريقة التركيب', 'Stack-style': 'تكديس رأسي',
- 'Levels of Protection': 'درجة الحماية', '10% - 90% (No Condensation)': '10% - 90% (بدون تكثيف)',
+ 'Levels of Protection': 'درجة الحماية', '10% - 90% (No Condensation)': '10% - 90% بدون تكثيف',
  'Allowable Altitude Above Sea Level': 'الارتفاع المسموح عن سطح البحر', 'UN38.3 IEC62619 CE': 'UN38.3 IEC62619 CE',
  '770*435*1986mm (7 packs)': '770*435*1986mm (7 وحدات)', '770*435*1738mm (6 packs)': '770*435*1738mm (6 وحدات)',
  '770*435*1490mm (5 packs)': '770*435*1490mm (5 وحدات)', '770*435*1242mm (4 packs)': '770*435*1242mm (4 وحدات)',
  'System Size': 'أبعاد النظام',
- 'Charging: 0': 'الشحن: 0°C ~ 45°C   التفريغ: -10°C ~ 45°C', '- 45': None, 'Discharging: -10': None,
+ 'Charging: 0': 'الشحن من 0°C إلى 45°C، التفريغ من -10°C إلى 45°C', '- 45': None, 'Discharging: -10': None,
  '-20': '-20°C ~ 60°C', '- 60': None,
  'Battery Pack': 'وحدة البطارية', 'Combination Mode': 'نمط التجميع', 'Operating Voltage': 'جهد التشغيل',
  'Nominal Voltage': 'الجهد الاسمي', 'Nominal Energy Capacity': 'الطاقة الاسمية', 'Single Module Weight': 'وزن الوحدة المفردة',
  'Nominal Capacity': 'السعة الاسمية', 'Dimensions (Width x Depth x Height )': 'الأبعاد (عرض × عمق × ارتفاع)',
- 'Cycle Life': 'عمر الدورات', '≥11000 cycles@25℃±2℃，0.5P，70%SOH': '≥11000 دورة @ 25°C±2°C، 0.5P، 70%SOH',
+ 'Cycle Life': 'عمر الدورات', '≥11000 cycles@25℃±2℃，0.5P，70%SOH': '11000 دورة أو أكثر عند 25°C±2°C و 0.5P و 70%SOH',
  'Relative Humidity': 'الرطوبة النسبية', '10%～90%': '10% ~ 90%', '-20℃~60℃': '-20°C ~ 60°C',
  'Discharge Temperature': 'حرارة التفريغ', 'Charge Temperature': 'حرارة الشحن',
  'Storage Environment Temperature': 'حرارة بيئة التخزين', '0℃~45℃': '0°C ~ 45°C', '-10℃~45℃': '-10°C ~ 45°C',
@@ -104,13 +104,13 @@ T = {
  'THDi': 'THDi', 'Input DC (PV side)': 'المدخل DC (جانب الألواح)', 'Recommended max. PV array size（KW）': 'أقصى حجم موصى به للألواح (kW)',
  'MPPT voltage range（V）': 'نطاق جهد MPPT ‏(V)', 'Max. input current（A）': 'أقصى تيار دخل (A)',
  'MPPT number/Max input strings number': 'عدد MPPT / أقصى عدد سلاسل',
- '< 3T': '< 3 طن', '-25~55': '-25 ~ 55', '-20~60': '-20 ~ 60', '3P/N/PE, 220 V / 380 V, 230 V / 400 V': '3P/N/PE، 220 V / 380 V، 230 V / 400 V',
+ '< 3T': 'أقل من 3 طن', '-25~55': '-25 ~ 55', '-20~60': '-20 ~ 60', '3P/N/PE, 220 V / 380 V, 230 V / 400 V': '3P/N/PE، 220 V / 380 V، 230 V / 400 V',
  'Liqud cooling, 50% glycol solution': 'تبريد سائل، محلول جلايكول 50%',
  'combustible gas detector+smoke detector+ temperature detector+explosion-proof fan+Aerosol': 'كاشف غازات قابلة للاشتعال + كاشف دخان + كاشف حرارة + مروحة مقاومة للانفجار + إيروسول',
  'Optional': 'اختياري', 'Standard configuration': 'تكوين قياسي',
  'Anti-islanding protection/Over current protection/Short Circuit Protection/DC reverse-polarity protection': 'حماية ضد التشغيل المنعزل / حماية من التيار الزائد / حماية من القصر / حماية من عكس قطبية DC',
- '>0.99(0.8 leading -0.8 lagging)': '>0.99 (0.8 متقدم ~ 0.8 متأخر)',
- '1.2 times of rated power, 100 s; 1.4 times of rated power, 10 s; 1.6 times of rated power, 200 ms': '1.2 ضعف القدرة المقننة 100 s؛ 1.4 ضعف 10 s؛ 1.6 ضعف 200 ms',
+ '>0.99(0.8 leading -0.8 lagging)': 'أكبر من 0.99، من 0.8 متقدم إلى 0.8 متأخر',
+ '1.2 times of rated power, 100 s; 1.4 times of rated power, 10 s; 1.6 times of rated power, 200 ms': '1.2 ضعف القدرة لمدة 100 s، و 1.4 ضعف لمدة 10 s، و 1.6 ضعف لمدة 200 ms',
  'Basic Parameters': 'المعايير الأساسية', 'Energy (kWh)': 'الطاقة (kWh)', 'Norminal Voltage (V)': 'الجهد الاسمي (V)',
  'Battery Capacity (Ah)': 'سعة البطارية (Ah)', 'Dimension (W*D*H, mm)': 'الأبعاد (عرض×عمق×ارتفاع، mm)', 'Weight (kg)': 'الوزن (kg)',
 }
@@ -119,10 +119,17 @@ T = {
 CFG = {
  '112c': {1: [(R(18, 15, 578, 732), 'left')]},
  '112s': {1: [(R(18, 15, 578, 676), 'left')], 2: [(R(18, 345, 578, 676), 'left')], 3: [(R(18, 468, 578, 702), 'left')]},
- 'l260': {1: [(R(64, 98, 544, 668), 'center'), (R(252, 682, 542, 795), 'center')]},
+ 'l260': {1: [(R(64, 98, 544, 668), 'center'), (R(253.6, 683.5, 539.3, 792), 'center')]},
 }
 CENTERED = {'Wide Temp', 'Range', 'Back up', 'Switch Seamless', 'Self-Consumption', 'Peak Shaving'}
 NAMES = {'112c': 'hithium-heroee-legend-112c', '112s': 'hithium-heroee-legend-112s', 'l260': 'pylontech-optimus-l260-hy'}
+
+
+def draw(pg, xr, cy, ar, w, size, col):
+    if not engine.AR.search(ar):
+        engine.put(pg, xr, cy, ar, True, w, size, col)
+    else:
+        draw(pg, xr, cy, ar, w, size, col)
 
 
 def fix(s):
@@ -167,7 +174,8 @@ for key, name in NAMES.items():
             inreg = any(r.contains(l['bbox']) for r, _ in regs)
             tr = T.get(l['t'], l['t'])
             if inreg or tr != l['t']:
-                cp.add_redact_annot(l['bbox'])
+                bb = l['bbox']; h = bb.height * 0.22 if bb.height > l['size'] * 1.6 else 0
+                cp.add_redact_annot(R(bb.x0, bb.y0 + h, bb.x1, bb.y1 - h))
         cp.apply_redactions(images=pymupdf.PDF_REDACT_IMAGE_NONE, graphics=pymupdf.PDF_REDACT_LINE_ART_NONE)
     clean = pymupdf.open('pdf', clean.tobytes())
 
@@ -192,7 +200,7 @@ for key, name in NAMES.items():
                 continue  # untouched original text (model names, numbers)
             ar = fix(tr); size = l['size']; col = '#%06x' % l['color']; w = l['w']
             cy = (b.y0 + b.y1) / 2 + size * 0.05
-            lw = engine.line_width(ar, w, size)
+            lw = engine.line_width(ar, w, size) if engine.AR.search(ar) else engine.width(ar, w, size)
             if reg:
                 r, mode = reg
                 C = r.x0 + r.x1
@@ -203,15 +211,15 @@ for key, name in NAMES.items():
                     if lw > maxw:
                         size *= maxw / lw; lw = maxw
                     cx = C - (b.x0 + b.x1) / 2
-                    engine.draw_line(pg, cx + lw / 2, cy, ar, w, size, col)
+                    draw(pg, cx + lw / 2, cy, ar, w, size, col)
                 else:
-                    engine.draw_line(pg, C - b.x0, cy, ar, w, size, col)
+                    draw(pg, C - b.x0, cy, ar, w, size, col)
             else:
                 if t in CENTERED:
-                    engine.draw_line(pg, (b.x0 + b.x1) / 2 + lw / 2, cy, ar, w, size, col)
+                    draw(pg, (b.x0 + b.x1) / 2 + lw / 2, cy, ar, w, size, col)
                     continue
                 grp = [o['bbox'].x1 for o in L if abs(o['bbox'].x0 - b.x0) < 5 and abs(o['bbox'].y0 - b.y0) < 45]
-                engine.draw_line(pg, max(grp + [b.x1]), cy, ar, w, size, col)
+                draw(pg, max(grp + [b.x1]), cy, ar, w, size, col)
     dst = f'{OUT}/{name}.pdf'
     out.save(dst, garbage=4, deflate=True)
     print('saved', dst)
