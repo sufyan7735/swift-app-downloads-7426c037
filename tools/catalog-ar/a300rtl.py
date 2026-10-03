@@ -60,7 +60,7 @@ T = {
     'Inverter Type': 'نوع الإنفرتر',
     'Inverter QTY': 'عدد الإنفرترات',
     'Cabinet': 'عدد',
-    'QTY': 'الخزائن',
+    'QTY': 'خزائن',
     'Min.': 'الحد',
     'configuration': 'التكوين',
     'Optional': 'تكوين',
@@ -107,12 +107,15 @@ for i, L in enumerate(lines):
         continue
     if t in LEGEND:  # legend: two Arabic lines right-anchored beside the mirrored swatch
         a, b2 = LEGEND[t]
+        size = 8
         xr = W - r.x0
         engine.draw_line(pg, xr, cy, a, w, size, col)
         if b2:
-            engine.draw_line(pg, xr, cy + 7.3, b2, w, size, col)
+            engine.draw_line(pg, xr, cy + 9.5, b2, w, size, col)
         continue
-    ar = T.get(t, t)
+    ar = T.get(t, t).replace('℃', '°C')
+    if r.y0 > 640 and r.x0 > 120 and r.x1 < 170 and size < 9:
+        size = 7.2
     if t == 'OPTIM US / A300-HY':  # header tag: mirror to the left margin, keep reading order
         lw = engine.line_width(ar, w, size)
         engine.draw_line(pg, W - r.x1 + lw, cy, ar, 700, size, col)
@@ -124,7 +127,7 @@ for i, L in enumerate(lines):
         lw = engine.line_width(ar, w, s)
         if r.y1 < 600 and r.x0 < 80 and size < 9 and lw > 220:
             s = size * 220 / lw
-        engine.draw_line(pg, W - r.x0, cy, ar, w, s, col)
+        engine.draw_line(pg, W - r.x0 - (3 if r.x0 < 80 else 0), cy, ar, w, s if t not in ('Cabinet','QTY') else 7, col)
     else:
         s = size
         lw = engine.line_width(ar, w, s)
