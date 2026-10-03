@@ -57,13 +57,27 @@ VAL = dict(deye1p.VAL, **{
         "حماية فصل الحمل عند زيادة الجهد، كشف التيار المتبقي (RCD)، مستوى الحماية من التدفق",
     "Insulation Resistor Detection, Residual Current Monitoring Unit, Output Over Current Protection,":
         "كشف مقاومة العزل، وحدة مراقبة التيار المتبقي، حماية الخرج من زيادة التيار،",
+    "DC Polarity Reverse Connection Protection, AC Output Overcurrent Protection, Thermal Protection,":
+        "حماية من عكس قطبية DC، حماية من زيادة تيار خرج AC، حماية حرارية،",
+    "AC Output Overvoltage Protection, AC Output Short Circuit Protection, DC Component Monitoring,":
+        "حماية من زيادة جهد خرج AC، حماية من قصر خرج AC، مراقبة مكوّن DC،",
+    "Overvoltage Load Drop Protection, Ground Fault Current Monitoring, Arc Fault Circuit Interrupter (optional),":
+        "حماية فصل الحمل عند زيادة الجهد، مراقبة تيار أعطال التأريض، قاطع خطأ القوس (اختياري)،",
+    "DC Polarity Reverse Connection Protection, AC Output Overcurrent Protection":
+        "حماية من عكس قطبية DC، حماية من زيادة تيار خرج AC",
+    "AC Output Overvoltage Protection, AC Output Short Circuit Protection, Thermal Protection":
+        "حماية من زيادة جهد خرج AC، حماية من قصر خرج AC، حماية حرارية",
+    "Anti-islanding Protection, PV String Input Reverse Polarity Protection,":
+        "حماية ضد التشغيل المنعزل، حماية سلاسل PV من عكس القطبية،",
+    "the Warranty Period Depends the Final Installation Site of Inverter, More Info Please Refer to Warranty Policy": deye1p.WARR2,
+    "Wall-mounted": "تثبيت على الحائط",
     "Output Shorted Protection, Surge Protection": "حماية الخرج من القصر، الحماية من التدفق",
 })
 
 
-def ltr(p, cx, cy, v, w, sz, col):
+def ltr(p, cx, cy, v, w, sz, col, mx=330):
     tw = engine.width(v, w, sz)
-    if tw > 330: sz *= 330 / tw; tw = 330
+    if tw > mx: sz *= mx / tw; tw = mx
     engine.LTR_DIRECT = True
     engine.put(p, cx + tw / 2, cy, v, True, w, sz, "#%06x" % col)
     engine.LTR_DIRECT = False
@@ -117,7 +131,7 @@ def rebuild(en):
             engine.LTR_DIRECT = True; engine.put(p, xr, cy, a, True, 400, sz, "#%06x" % col); engine.LTR_DIRECT = False
             engine.place(p, r, {"ar": b, "r": xr - wa - 2}, sz, col); continue
         if not engine.AR.search(v):
-            ltr(p, mcx, cy, v, w, sz, col); continue
+            ltr(p, mcx, cy, v, w, sz, col, 66 if col == 0xffffff and v.startswith(('SUN', '-')) else 330); continue
         engine.place(p, r, {"ar": v, "cx": mcx, "center": True, "w": w, "maxw": 340}, sz, col)
     if miss:
         print("UNTRANSLATED:", miss, file=sys.stderr)
