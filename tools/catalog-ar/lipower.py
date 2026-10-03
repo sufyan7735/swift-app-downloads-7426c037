@@ -111,6 +111,8 @@ def table_page(page):
             v = find(t, VAL)
             if v is None:
                 v = t.replace("*", " × ").replace("x", " × ") if re.fullmatch(r"\d+[*x]\d+[*x]\d+", t) else t
+            if t.startswith("Battery mode") and not any(x["t"].startswith("Load;400ms") for x in texts):
+                v = v.replace("\n", "، ")
             s = {"ar": v, "cx": cx, "w": 400, "size": sz * 1.0, "maxw": 250, "center": True, "lh": r.height * 1.55}
         rr = r
         engine.place(page, rr, s, sz, l["color"])
