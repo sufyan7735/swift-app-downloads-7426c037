@@ -221,7 +221,7 @@ for key, name in NAMES.items():
             if reg is None and tr == t:
                 continue  # untouched original text (model names, numbers)
             if key == '112s' and pno in (2, 3) and l['size'] > 20:
-                pg.draw_rect(R(b.x0, (b.y0 + b.y1) / 2 - l['size'] * 0.45, b.x1, (b.y0 + b.y1) / 2 + l['size'] * 0.5), color=None, fill=(1, 1, 1))
+                pg.draw_rect(R(b.x0, (b.y0 + b.y1) / 2 - l['size'] * 0.45, b.x1, (b.y0 + b.y1) / 2 + l['size'] * 0.8), color=None, fill=(1, 1, 1))
             ar = fix(tr); size = l['size']; col = '#%06x' % l['color']; w = l['w']
             cy = (b.y0 + b.y1) / 2 + size * 0.05
             lw = engine.line_width(ar, w, size) if engine.AR.search(ar) else engine.width(ar, w, size)
