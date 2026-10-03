@@ -46,7 +46,7 @@ T = {
  'Charging: 0℃-55℃ Discharging: -20℃-55℃': 'الشحن من 0°C إلى 55°C، التفريغ من -20°C إلى 55°C',
  'Allowable Altitude Bbove': 'الارتفاع المسموح', 'Sea Level': 'عن سطح البحر',
  # ---- 112S ----
- 'C&I Battery Pack': 'حزمة بطاريات تجارية وصناعية', 'Built for Maximum Flexibility': 'مصمم لأقصى درجات المرونة',
+ 'C&I Battery Pack': 'C&I Battery Pack', 'Built for Maximum Flexibility': 'مصمم لأقصى درجات المرونة',
  'Expandable Capacity': 'سعة قابلة للتوسعة',
  'Modular, stackable design allows capacity': 'تصميم معياري قابل للتكديس يتيح توسعة',
  'expansion up to 720kWh, easily adapting to': 'السعة حتى 720kWh، ويتكيّف بسهولة مع',
@@ -93,17 +93,17 @@ T = {
  'Self-Consumption': 'الاستهلاك الذاتي', 'Peak Shaving': 'تقليم الذروة',
  'General Data': 'بيانات عامة', 'Dimension(W*H*D mm)': 'الأبعاد (عرض×ارتفاع×عمق mm)', 'Weight(T)': 'الوزن (طن)',
  'Working Temperature Range ( ℃)': 'نطاق حرارة التشغيل (°C)', 'Storage Temperature Range ( ℃)': 'نطاق حرارة التخزين (°C)',
- 'Ac output voltage (V)': 'جهد خرج AC ‏(V)', 'Frequency(Hz)': 'التردد (Hz)', 'System Efficiency (RTE)': 'كفاءة النظام (RTE)',
+ 'Ac output voltage (V)': 'جهد خرج AC (V)', 'Frequency(Hz)': 'التردد (Hz)', 'System Efficiency (RTE)': 'كفاءة النظام (RTE)',
  'Normal auxiliary power consumption (kW)': 'استهلاك الطاقة المساعدة الاعتيادي (kW)', 'IP Rating': 'درجة الحماية IP',
  'Altitude(m)': 'الارتفاع (m)', 'Corrosion protection class': 'فئة الحماية من التآكل', 'Humidity': 'الرطوبة',
  'Cooling type': 'نوع التبريد', 'Fire Extinguishing': 'إطفاء الحريق', 'Explosion Relief Panel': 'لوحة تنفيس الانفجار',
  'Water fire protection': 'الحماية المائية من الحريق', 'Authentication level': 'الشهادات', 'Communication': 'الاتصال',
- 'Battery Data': 'بيانات البطارية', 'Nominal Capacity (kWh)': 'السعة الاسمية (kWh)', 'DC Voltage Range(V)': 'نطاق جهد DC ‏(V)',
- 'Depth of discharge': 'عمق التفريغ', 'Standard Operation DC Current (A)': 'تيار التشغيل القياسي DC ‏(A)',
+ 'Battery Data': 'بيانات البطارية', 'Nominal Capacity (kWh)': 'السعة الاسمية (kWh)', 'DC Voltage Range(V)': 'نطاق جهد DC (V)',
+ 'Depth of discharge': 'عمق التفريغ', 'Standard Operation DC Current (A)': 'تيار التشغيل القياسي DC (A)',
  'Hybrid Inverter Data': 'بيانات الإنفرتر الهجين', 'Output AC': 'الخرج AC', 'Rated output power（kW）': 'قدرة الخرج المقننة (kW)',
  'Power factor': 'معامل القدرة', 'Max. apparent output power': 'أقصى قدرة خرج ظاهرية', 'Back-up switch time （ms）': 'زمن التحويل الاحتياطي (ms)',
  'THDi': 'THDi', 'Input DC (PV side)': 'المدخل DC (جانب الألواح)', 'Recommended max. PV array size（KW）': 'أقصى حجم موصى به للألواح (kW)',
- 'MPPT voltage range（V）': 'نطاق جهد MPPT ‏(V)', 'Max. input current（A）': 'أقصى تيار دخل (A)',
+ 'MPPT voltage range（V）': 'نطاق جهد MPPT (V)', 'Max. input current（A）': 'أقصى تيار دخل (A)',
  'MPPT number/Max input strings number': 'عدد MPPT / أقصى عدد سلاسل',
  '< 3T': 'أقل من 3 طن', '-25~55': '-25 ~ 55', '-20~60': '-20 ~ 60', '3P/N/PE, 220 V / 380 V, 230 V / 400 V': '3P/N/PE، 220 V / 380 V، 230 V / 400 V',
  'Liqud cooling, 50% glycol solution': 'تبريد سائل، محلول جلايكول 50%',
@@ -184,8 +184,8 @@ for key, name in NAMES.items():
             inreg = any(r.contains(l['bbox']) for r, _ in regs)
             tr = T.get(l['t'], l['t'])
             if inreg or tr != l['t']:
-                bb = l['bbox']; h = bb.height * 0.22 if bb.height > l['size'] * 1.6 else 0
-                cp.add_redact_annot(R(bb.x0, bb.y0 + h, bb.x1, bb.y1 - h))
+                bb = l['bbox']; c = (bb.y0 + bb.y1) / 2; k = l['size'] * 0.42
+                cp.add_redact_annot(R(bb.x0, max(bb.y0, c - k), bb.x1, min(bb.y1, c + k)))
         cp.apply_redactions(images=pymupdf.PDF_REDACT_IMAGE_NONE, graphics=pymupdf.PDF_REDACT_LINE_ART_NONE)
         for vr, *_ in VEC.get(key, {}).get(pno, []):
             cp.add_redact_annot(vr)
