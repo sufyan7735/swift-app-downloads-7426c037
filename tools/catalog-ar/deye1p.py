@@ -116,10 +116,10 @@ def rebuild():
             continue
         if t.startswith("-40 to"):
             a, b = "-40 ~ +60 °C", "، خفض القدرة فوق 45 °C"
-            wa, wb = engine.line_width(a, 400, sz), engine.line_width(b, 400, sz)
+            wa, wb = engine.width(a, 400, sz), engine.line_width(b, 400, sz)
             xr = mcx + (wa + wb + 2) / 2
             rr = pymupdf.Rect(0, 586, 0, 595)
-            engine.place(p, rr, {"ar": a, "r": xr}, sz, col)
+            engine.put(p, xr, 590.5, a, True, 400, sz, "#%06x" % col)
             engine.place(p, rr, {"ar": b, "r": xr - wa - 2}, sz, col); continue
         if t.startswith("the Warranty"):
             engine.place(p, r, {"ar": WARR2, "cx": W - 373.5, "maxw": 340}, sz, col); continue
