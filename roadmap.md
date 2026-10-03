@@ -16,3 +16,6 @@
 - [ ] Solis 12-20K, 29.9-50K, 75-125K
 - [ ] Deye 3-6K, 7.6-12K, 14-20K, 29.9-50K, 60-80K
 - [ ] Batteries (Pylontech UF5000, Optimus A300, Hithium NeoPower 4) + numbered catalog-*.pdf
+
+- [x] Arabic catalog alignment: Suntech 595 done (tools/catalog-ar/fix595.py)
+- [ ] Arabic catalog alignment: remaining catalogs (await user go-ahead)
