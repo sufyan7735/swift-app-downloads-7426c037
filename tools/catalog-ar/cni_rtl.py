@@ -4,6 +4,7 @@ stay untouched. Marketing text is translated in place, right-anchored to its ori
 Usage: python3 cni_rtl.py <src-dir> <out-dir>   (src files: 112c.pdf 112s.pdf l260.pdf)"""
 import sys, re; sys.path.insert(0, '/dev-server/tools/catalog-ar')
 import pymupdf, engine
+engine.LTR_DIRECT = True  # pure-latin runs via insert_text: keeps '-25 ~ 55' in reading order
 
 SRC, OUT = sys.argv[1], sys.argv[2]
 R = pymupdf.Rect
@@ -118,9 +119,18 @@ T = {
 # per file: page -> list of (region, value_mode) mirrored about region centre. value_mode 'left' = values left-aligned
 CFG = {
  '112c': {1: [(R(18, 15, 578, 732), 'left')]},
- '112s': {1: [(R(18, 15, 578, 676), 'left')], 2: [(R(18, 345, 578, 676), 'left')], 3: [(R(18, 468, 578, 702), 'left')]},
+ '112s': {1: [(R(18, 15, 578, 812), 'left')], 2: [(R(18, 345, 578, 812), 'left')], 3: [(R(18, 468, 578, 715), 'left')]},
  'l260': {1: [(R(64, 98, 544, 668), 'center'), (R(253.6, 683.5, 539.3, 792), 'center')]},
 }
+FOOT = '*البيانات أعلاه للاسترشاد فقط، ويُعتمد ورق المواصفات الرسمي.'
+# text drawn as vector outlines in the source: (rect to erase, arabic or None, size, colour, weight)
+VEC = {'112s': {
+ 1: [(R(257, 573, 409, 585), 'حتى 4000m، مع خفض الأداء فوق 2000m', 10, '#333333', 400),
+     (R(26, 786, 272, 798), FOOT, 8, '#9a9a9a', 400), (R(309, 361, 474, 371), None, 0, '', 0), (R(271, 391, 312, 401), None, 0, '', 0)],
+ 2: [(R(26, 787, 272, 798), FOOT, 8, '#9a9a9a', 400)],
+ 3: [(R(26, 693, 272, 703), FOOT, 8, '#9a9a9a', 400), (R(30, 743, 101, 758), 'للتواصل:', 13, '#000000', 600),
+     (R(30, 771, 59, 787), 'هاتف:', 13, '#000000', 600), (R(418, 816, 505, 826), 'تعاون تجاري', 6.5, '#000000', 400),
+     (R(528, 815, 559, 824), 'الموقع', 6.5, '#000000', 400)]}}
 CENTERED = {'Wide Temp', 'Range', 'Back up', 'Switch Seamless', 'Self-Consumption', 'Peak Shaving'}
 NAMES = {'112c': 'hithium-heroee-legend-112c', '112s': 'hithium-heroee-legend-112s', 'l260': 'pylontech-optimus-l260-hy'}
 
@@ -177,6 +187,10 @@ for key, name in NAMES.items():
                 bb = l['bbox']; h = bb.height * 0.22 if bb.height > l['size'] * 1.6 else 0
                 cp.add_redact_annot(R(bb.x0, bb.y0 + h, bb.x1, bb.y1 - h))
         cp.apply_redactions(images=pymupdf.PDF_REDACT_IMAGE_NONE, graphics=pymupdf.PDF_REDACT_LINE_ART_NONE)
+        for vr, *_ in VEC.get(key, {}).get(pno, []):
+            cp.add_redact_annot(vr)
+        if VEC.get(key, {}).get(pno):
+            cp.apply_redactions(images=pymupdf.PDF_REDACT_IMAGE_NONE, graphics=pymupdf.PDF_REDACT_LINE_ART_REMOVE_IF_COVERED, text=pymupdf.PDF_REDACT_TEXT_NONE)
     clean = pymupdf.open('pdf', clean.tobytes())
 
     out = pymupdf.open()
@@ -190,6 +204,12 @@ for key, name in NAMES.items():
             m = mirrored_region(clean, pno, r)
             pg.show_pdf_page(pg.rect, m, 0)
         L = infos[pno]
+        for vr, ar, size, col, w in VEC.get(key, {}).get(pno, []):
+            if not ar:
+                continue
+            cy = (vr.y0 + vr.y1) / 2 + size * 0.05
+            reg = next((r for r, _ in regs if r.contains(vr)), None)
+            draw(pg, (reg.x0 + reg.x1 - vr.x0) if reg else vr.x1, cy, ar, w, size, col)
         for l in L:
             t, b = l['t'], l['bbox']
             tr = T.get(t, t)
