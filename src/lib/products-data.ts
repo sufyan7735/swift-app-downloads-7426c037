@@ -1017,7 +1017,7 @@ export const PRODUCTS: Product[] = [
     ],
     certificates: "UN38.3",
     image: legend112cImage.url,
-    files: [],
+    files: sheet("/catalogs/hithium-heroee-legend-112c.pdf"),
   },
   {
     id: "pylontech-optimus-l260-hy",
@@ -1056,7 +1056,7 @@ export const PRODUCTS: Product[] = [
     ],
     certificates: "IEC62619، IEC62477، CE EMC، UN38.3",
     image: optimusL260Image.url,
-    files: [],
+    files: sheet("/catalogs/pylontech-optimus-l260-hy.pdf"),
   },
   {
     id: "hithium-heroee-legend-112s",
@@ -1093,7 +1093,7 @@ export const PRODUCTS: Product[] = [
     ],
     certificates: "UN38.3، IEC62619، CE",
     image: legend112sImage.url,
-    files: [],
+    files: sheet("/catalogs/hithium-heroee-legend-112s.pdf"),
   },
 ];
 
