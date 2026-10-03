@@ -69,7 +69,7 @@ T = {
     '*Degration at temperatures below 10℃ or above 40℃': '*ينخفض الأداء عند درجات حرارة أقل من 10℃ أو أعلى من 40℃',
 }
 # legend second lines differ per entry
-LEGEND = {'Min.': ('الحد الأدنى', None), 'Optional': ('تكوين', 'اختياري'), 'Standard': ('تكوين', 'قياسي')}
+LEGEND = {'Min.': ('تكوين', 'الحد الأدنى'), 'Optional': ('تكوين', 'اختياري'), 'Standard': ('تكوين', 'قياسي')}
 
 src = pymupdf.open(EN)
 sp = src[1]
