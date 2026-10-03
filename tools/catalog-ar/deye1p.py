@@ -22,7 +22,7 @@ LAB = {
     "MPPT Voltage Range (V)": "نطاق جهد MPPT (V)", "Rated PV Input Voltage (V)": "جهد دخل PV المقنن (V)",
     "Max. Operating PV Input Current (A)": "أقصى تيار تشغيل لدخل PV (A)",
     "Max. Input Short-Circuit Current (A)": "أقصى تيار قصر لدخل PV (A)",
-    "No. of MPP Trackers/": "عدد متتبعات MPPT/", "No. of Strings MPP Tracker": "عدد السلاسل لكل متتبع",
+    "No. of MPP Trackers/": "عدد متتبعات MPPT", "No. of Strings MPP Tracker": "عدد السلاسل لكل متتبع",
     "Rated AC Input/Output Active Power (W)": "القدرة الفعالة المقننة لدخل/خرج AC (W)",
     "Max. AC Input/Output Apparent Power (VA)": "أقصى قدرة ظاهرية لدخل/خرج AC (VA)",
     "Rated AC Input/Output Current (A)": "التيار المقنن لدخل/خرج AC (A)",
@@ -39,14 +39,14 @@ LAB = {
     "Operating Temperature Range (℃)": "نطاق درجة حرارة التشغيل (°C)", "Permissible Ambient Humidity": "الرطوبة المحيطة المسموحة",
     "Permissible Altitude": "الارتفاع المسموح", "Noise (dB)": "الضجيج (dB)", "Ingress Protection(IP) Rating": "درجة الحماية (IP)",
     "Inverter Topology": "طوبولوجيا الإنفرتر", "Over Voltage Category": "فئة الجهد الزائد",
-    "Cabinet Size (WxHxD mm)": "أبعاد الهيكل (عرض×ارتفاع×عمق mm)", "Weight (kg)": "الوزن (kg)", "Type of Cooling": "نوع التبريد",
+    "Cabinet Size (WxHxD mm)": "أبعاد الهيكل W×H×D (mm)", "Weight (kg)": "الوزن (kg)", "Type of Cooling": "نوع التبريد",
     "Warranty": "الضمان", "Grid Regulation": "معايير الشبكة", "Safety / EMC Standard": "معايير السلامة / EMC",
 }
 VAL = {
     "Lead-acid or Lithium-ion": "رصاص حمضي أو ليثيوم أيون", "Self-adaption to BMS": "تكيّف ذاتي مع BMS",
     "2 times of rated power, 10s": "ضعف القدرة المقننة لمدة 10s", "0.8 leading to 0.8 lagging": "من 0.8 متقدم إلى 0.8 متأخر",
     "<3% (of nominal power)": "أقل من 3% (من القدرة الاسمية)", "<0.5% In": "أقل من 0.5% In",
-    "-40 to +60℃, >45℃ Derating": "-40 ~ +60 °C، خفض القدرة فوق 45 °C", "<45": "أقل من 45",
+    "-40 to +60℃, >45℃ Derating": "-40 ~ +60 °C\nخفض القدرة فوق 45 °C", "<45": "أقل من 45",
     "Non-Isolated": "غير معزول", "Intelligent Air Cooling": "تبريد هوائي ذكي",
     "420×670×233 (Excluding Connectors and Brackets)": "420×670×233 (بدون الموصلات والحوامل)",
     "5 Years/10 Years": "5 سنوات / 10 سنوات",
@@ -85,7 +85,7 @@ def rebuild():
     p.show_pdf_page(pymupdf.Rect(0, FOOT, W, H), src, 1, clip=pymupdf.Rect(0, FOOT, W, H))  # footer, unmirrored
     x = p.get_contents()[0]
     c = out.xref_stream(x).decode()
-    c = re.sub(r"1 0 0 1 0 0 cm", "-1 0 0 1 %.4f 0 cm" % W, c, count=1)
+    c = c.replace("q ", "q -1 0 0 1 %.4f 0 cm " % W, 1)
     out.update_stream(x, c.encode())
     p = out[0]
 
@@ -93,7 +93,7 @@ def rebuild():
     done_prot = done_warr = False
     for s in sp:
         t, r = s['t'], s['r']
-        key = (t, round(r.y0))
+        key = (t, round(r.x0), round(r.y0))
         if r.y1 >= FOOT or key in seen:
             continue
         seen.add(key)
@@ -116,7 +116,7 @@ def rebuild():
             continue
         if t.startswith("the Warranty"):
             engine.place(p, r, {"ar": WARR2, "cx": W - 373.5, "maxw": 340}, sz, col); continue
-        engine.place(p, r, {"ar": VAL.get(t, t), "cx": mcx, "w": 600 if col == 0xffffff else 400, "maxw": 300}, sz, col)
+        engine.place(p, r, {"ar": VAL.get(t, t), "cx": mcx, "center": True, "lh": 9, "w": 600 if col == 0xffffff else 400, "maxw": 300}, sz, col)
     return out
 
 
