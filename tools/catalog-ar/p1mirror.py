@@ -94,6 +94,8 @@ def en_anchor(en_page, r, band):
             continue
         for l in b["lines"]:
             lr = fitz.Rect(l["bbox"])
+            if len(re.findall(r"[A-Za-z]", "".join(sp["text"] for sp in l["spans"]))) < 3:
+                continue
             if not fitz.Rect(band[:4]).contains(lr):
                 continue
             if lr.y1 < r.y0 - 2 or lr.y0 > r.y1 + 2:
