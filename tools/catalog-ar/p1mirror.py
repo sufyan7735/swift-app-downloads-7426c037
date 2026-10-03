@@ -79,7 +79,7 @@ def elements(page, band, arr, sc):
         if r.width < 2 or r.height < 2:
             continue
         cen = fitz.Point((r.x0 + r.x1) / 2, (r.y0 + r.y1) / 2)
-        if any((r & t).get_area() > 0.3 * min(r.get_area(), t.get_area()) for t in texts):
+        if any((r & t).get_area() > 0.5 * r.get_area() for t in texts):
             tx.append(r)
         else:
             icons.append(r)
