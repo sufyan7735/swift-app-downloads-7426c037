@@ -19,3 +19,4 @@
 
 - [x] Arabic catalog alignment: Suntech 595 done (tools/catalog-ar/fix595.py)
 - [ ] Arabic catalog alignment: remaining catalogs (await user go-ahead)
+- [ ] Reconnect GitHub API in the new workspace after finishing the Deye catalog review.
