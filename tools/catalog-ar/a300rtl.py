@@ -131,6 +131,8 @@ for i, L in enumerate(lines):
     else:
         s = size
         lw = engine.line_width(ar, w, s)
+        if lw > 245:
+            s = s * 245 / lw; lw = 245
         cx = W - (r.x0 + r.x1) / 2
         engine.draw_line(pg, cx + lw / 2, cy, ar, w, s, col)
 
