@@ -126,8 +126,17 @@ def rebuild(en):
             engine.place(p, r, {"ar": LAB[t], "r": W - r.x0, "w": w, "maxw": 150}, sz, col); continue
         if r.x0 < 60:
             miss.append(t)
-        if any(ch.isalpha() for ch in t) and t not in VAL and not t.isascii() is False:
-            pass
+        if t == "Preliminary":
+            continue  # rotated watermark: dropped (would read mirrored)
+        v = VAL.get(t, t)
+        if not engine.AR.search(v):  # pure Latin/numeric value: draw as one LTR run so "< 10 ms" keeps its order
+            fs = sz
+            tw = engine.width(v, w, fs)
+            if tw > 380: fs *= 380 / tw; tw = 380
+            engine.LTR_DIRECT = True
+            engine.put(p, W - (r.x0 + r.x1) / 2 + tw / 2, (r.y0 + r.y1) / 2, v, True, w, fs, "#%06x" % col)
+            engine.LTR_DIRECT = False
+            continue
         engine.place(p, r, {"ar": VAL.get(t, t), "cx": W - (r.x0 + r.x1) / 2, "center": True, "w": w, "maxw": 380}, sz, col)
     if miss:
         print("UNTRANSLATED LABELS:", miss, file=sys.stderr)
