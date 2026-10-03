@@ -32,12 +32,12 @@ ITEM = [("Input format", "صيغة الدخل"), ("Rated input voltage", "جهد
 VAL = [("None", "لا يوجد"), ("Pure sine wave", "موجة جيبية نقية"),
        ("90-280VAC", "90-280VAC ±3V للوضع العادي، و170-280VAC ±3V لوضع UPS"),
        ("50Hz/ 60Hz(Automatic", "50/60Hz، تكيّف تلقائي"), ("UPS MODE", "وضع UPS: 10 ms، ووضع APL: 20 ms"),
-       ("Battery mode", "وضع البطارية: 11s عند حمل 105%~150%، و2s عند 150%~200%، و400ms فوق 200%"),
+       ("Battery mode", "وضع البطارية: 11s عند حمل 105%~150%، و2s عند 150%~200%\nو400ms عند حمل أكبر من 200%"),
        ("It can display", "يعرض وضع التشغيل والحمل والدخل والخرج وغيرها"), ("Baud rate", "معدل الباود 240"),
        ("Lithium battery BMS", "بطاقة اتصال BMS لبطاريات الليثيوم، بطاقة WIFI، بطاقة تلامس جاف، وغيرها"),
-       ("-10~50", "من −10°C إلى +50°C"), ("-15~60", "من −15°C إلى +60°C"), ("15~60", "من −15°C إلى +60°C"),
+       ("-10~50", "-10~50 °C"), ("-15~60", "-15~60 °C"), ("15~60", "-15~60 °C"),
        ("20%~95%", "من 20% إلى 95% بدون تكاثف"),
-       ("The altitude", "لا يتجاوز 1000 متر، وفوق ذلك تُخفَّض القدرة؛ الحد الأقصى 4000 متر وفق IEC 62040"),
+       ("The altitude", "يجب ألا يتجاوز الارتفاع 1000 متر، وفوق 1000 متر\nتُخفَّض القدرة المقننة. أقصى ارتفاع 4000 متر\nراجع IEC 62040"),
        ("Parallel", "توازي وربط بالشبكة")]
 SKIP = ("Load;400ms", "meters, the rating", "meters. Refer", "is 4000 meters", "maximum altitude is", "Grid connection", "℃")
 
@@ -98,26 +98,21 @@ def table_page(page):
             continue
         cx = W - (r.x0 + r.x1) / 2
         if r.x0 < 120:
-            ar = find(t, GROUP) or t
-            s = {"ar": ar, "r": W - r.x0, "w": 700, "size": sz * 1.08}
+            s = {"ar": find(t, GROUP) or t, "r": W - r.x0, "w": 700, "size": sz * 1.05}
         elif (r.x0 + r.x1) / 2 < 300 and not t.startswith(("BZ", "2012")):
-            s = {"ar": find(t, ITEM) or t, "cx": cx, "w": 600, "size": sz * 1.1}
-            if r.x0 > 250 or t.startswith(("Battery inverter", "Photovoltaic inverter")):
-                s["maxw"] = (r.x1 - r.x0) + 8
+            s = {"ar": find(t, ITEM) or t, "w": 400, "size": sz * 1.0, "maxw": (r.x1 - r.x0) + 30}
+            if r.x0 < 215 and r.x1 < 300 and t.startswith(("Input format", "Rated input", "Voltage range", "Frequency range")) and r.x0 < 205:
+                s["r"] = W - r.x0
+            else:
+                s["cx"] = cx
+            if t.startswith(("Battery", "Photovoltai")) and r.x0 > 250:
+                s["maxw"] = (r.x1 - r.x0) + 6
         else:
-            ar = find(t, VAL) or t.replace("*", " × ").replace("x", " × ") if re.fullmatch(r"\d+[*x]\d+[*x]\d+", t) else (find(t, VAL) or t)
-            s = {"ar": ar, "cx": cx, "w": 400, "size": sz * 1.05, "maxw": 225}
-        if "\u0600" > s["ar"][:1] and s["ar"] == t:
-            s["w"] = 400 if s["w"] == 600 else s["w"]
+            v = find(t, VAL)
+            if v is None:
+                v = t.replace("*", " × ").replace("x", " × ") if re.fullmatch(r"\d+[*x]\d+[*x]\d+", t) else t
+            s = {"ar": v, "cx": cx, "w": 400, "size": sz * 1.0, "maxw": 250, "center": True, "lh": r.height * 1.55}
         rr = r
-        if t.startswith(("-10~50", "-15~60", "15~60")):
-            s["maxw"] = 400
-        elif t.startswith(("The altitude", "Battery mode", "Parallel")):
-            rr = pymupdf.Rect(r.x0, r.y0, r.x1, r.y0 + 6 if sz < 6 else r.y1)
-            if t.startswith("The altitude"):
-                rr = pymupdf.Rect(r.x0, r.y0, r.x1, r.y0 + (2.2 if sz < 6 else 2) * (r.y1 - r.y0) * 1.6)
-            if t.startswith("Parallel") and sz < 6:
-                rr = pymupdf.Rect(r.x0, r.y0 + 3, r.x1, r.y1 + 3)
         engine.place(page, rr, s, sz, l["color"])
 
 
